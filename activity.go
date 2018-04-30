@@ -75,12 +75,16 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	} else {
 
 
-		//code, msg := GDrive.CreateFile(accessToken, fileFullPath, emailAddr, role, sendNotification, timeout)
+		code , msg , response ,nextcur   := twitter.GetFollowers(consumerKey,consumerSecret,accessToken,accessTokenSecret,nextPgcursor,pageCount)
 
-		code, msg := twitter.PostTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, tweet)
+		//code, msg := twitter.GetFollowers(consumerKey,consumerSecret, accessToken, accessTokenSecret, nextPgcursor, pageCount)
 		context.SetOutput("statusCode", code)
 
 		context.SetOutput("message", msg)
+
+		context.SetOutput("Response", response )
+
+		context.SetOutput("Next_Cursor", nextcur)
 	}
 
 	return true, err
