@@ -1,4 +1,4 @@
-package getfollowers
+package twittergetfollowers
 
 import (
 	s "strings"

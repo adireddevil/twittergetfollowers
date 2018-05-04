@@ -1,4 +1,4 @@
-package getfollowers
+package twittergetfollowers
 
 import (
 	"io/ioutil"
