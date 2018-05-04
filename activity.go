@@ -2,7 +2,8 @@ package getfollowers
 
 import (
 	s "strings"
-	"github.com/DipeshTest/allstarsshared/Twitter"
+
+	"github.com/JayDShah/TwitterAPI"
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
@@ -12,7 +13,7 @@ type MyActivity struct {
 	metadata *activity.Metadata
 }
 
-var log = logger.GetLogger("activity-gdrivecreate")
+var log = logger.GetLogger("activity-twittergetfollowers")
 
 // NewActivity creates a new activity
 func NewActivity(metadata *activity.Metadata) activity.Activity {
@@ -39,14 +40,11 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		context.SetOutput("statusCode", "101")
 
 		context.SetOutput("message", "Consumer Key field is blank")
-		//context.SetOutput("failedNumbers", to)
-
-		//respond with this
 	} else if len(consumerSecret) == 0 {
 
 		context.SetOutput("statusCode", "102")
 
-		context.SetOutput("message", "Consumer Key field is blank")
+		context.SetOutput("message", "Consumer Secret field is blank")
 
 	} else if len(accessToken) == 0 {
 
@@ -60,29 +58,14 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 		context.SetOutput("message", "Access Token Secret field is blank")
 
-	} else if len(nextPgcursor) == 0 {
-
-		context.SetOutput("statusCode", "105")
-
-		context.SetOutput("message", "Direct Message cannot be blank")
-
-	} else if (pageCount) > 0 {
-
-		context.SetOutput("statusCode", "106")
-
-		context.SetOutput("message", "User field is blank")
-
 	} else {
 
-
-		code , msg , response ,nextcur   := twitter.GetFollowers(consumerKey,consumerSecret,accessToken,accessTokenSecret,nextPgcursor,pageCount)
-
-		//code, msg := twitter.GetFollowers(consumerKey,consumerSecret, accessToken, accessTokenSecret, nextPgcursor, pageCount)
+		code, msg, response, nextcur := Twitter.GetFollowers(consumerKey, consumerSecret, accessToken, accessTokenSecret, nextPgcursor, pageCount)
 		context.SetOutput("statusCode", code)
 
 		context.SetOutput("message", msg)
 
-		context.SetOutput("Response", response )
+		context.SetOutput("Response", response)
 
 		context.SetOutput("Next_Cursor", nextcur)
 	}
